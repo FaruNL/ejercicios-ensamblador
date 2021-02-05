@@ -40,5 +40,5 @@ Ejercicios en 8086 Assembly
         [autoexec]
         mount c ~/DOSBOX
         C:
-        PATH=%PATH%;C:\BIN\OTHER;C:\BIN\MASM611\BIN;C:\BIN\TASM\BIN;        C:\BIN\TC\BIN;C:\BIN\TC\INCLUDE;C:\BIN\TC\LIB
+        PATH=%PATH%;C:\BIN\OTHER;C:\BIN\MASM611\BIN;C:\BIN\TASM\BIN;C:\BIN\TC\BIN;C:\BIN\TC\INCLUDE;C:\BIN\TC\LIB
         ```
