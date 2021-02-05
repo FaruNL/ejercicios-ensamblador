@@ -35,7 +35,7 @@ Ejercicios en 8086 Assembly
         ```
     - *[autoexec]:* Comandos que se ejecutan al abrir DOSBOX
         - Cambia `~/DOSBOX` por la ruta donde DOSBOX tomará como `C:`
-        - Ubica la carpeta BIN de este repositorio en la carpeta del anteriormente mencionda.
+        - Ubica la carpeta BIN de este repositorio en la carpeta anteriormente mencionda.
         ```conf
         [autoexec]
         mount c ~/DOSBOX
