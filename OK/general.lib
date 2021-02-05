@@ -1,0 +1,94 @@
+;─────── Macros ──────┐
+printS MACRO str
+    MOV AH, 09h
+    LEA DX, str
+    INT 21h
+ENDM
+
+readS MACRO mem
+; mem: 
+;     [mem]:   1er byte == Tamaño max. de string
+;     [mem+1]: 2do byte == Tamaño actual
+;     [mem+2]: 3er byte == Donde inicia String
+    MOV AH, 0Ah
+    LEA DX, mem
+    INT 21h
+
+; Remplazamos el char 0D por centinela "$"
+    XOR BX, BX            ; Limpiamos registro BX
+    MOV BL, [mem+1]       ; BL == Tamaño actual
+    MOV [mem+2+BX], "$"   ; Inicio de String + BX(BL): 1 byte después del String == $
+ENDM
+
+cursorPos MACRO fila, columna
+    MOV AH, 02h
+    MOV BH, 0h
+    MOV DH, fila
+    MOV DL, columna
+    INT 10h
+ENDM
+
+printChar MACRO regVal
+    MOV AH, 02h
+    MOV DL, regVal
+    INT 21h
+ENDM
+
+printCharPlus0 MACRO regVal
+    MOV AH, 02h
+    MOV DL, regVal
+    ADD DL, '0'
+    INT 21h
+ENDM
+
+printNum MACRO regVal
+    MOV AH, 02h
+    MOV DL, regVal
+    ADD DL, '0'
+    INT 21h
+ENDM
+
+;┌────────────┬─────────────────┬──────────────────┬────────────────────┐
+;│ 0 == Black │ 4 == Red        │ 8 == Dark Gray   │ C == Light Red     │
+;│ 1 == Blue  │ 5 == Magenta    │ 9 == Light Blue  │ D == Light Magenta │
+;│ 2 == Green │ 6 == Brown      │ A == Light Green │ E == Yellow        │
+;│ 3 == Cyan  │ 7 == Light Gray │ B == Light Cyan  │ F == White         │
+;└────────────┴─────────────────┴──────────────────┴────────────────────┘
+paintScreen MACRO color
+    MOV AX, 0600h
+    MOV BH, color     ; MSD == Fondo, LSD == Letras
+    MOV CX, 0000h
+    MOV DX, 184Fh
+    INT 10h
+ENDM
+;─────────────────────┘
+
+.CODE
+
+;───── Procedures ────┐
+readChar PROC NEAR
+    MOV AH, 01h
+    INT 21h
+    RET
+readChar ENDP
+
+pause PROC NEAR
+    MOV AH, 07h
+    INT 21h
+    RET
+pause ENDP
+
+cls PROC NEAR
+    MOV AX, 0600h
+    MOV BH, 07h
+    MOV CX, 0000h
+    MOV DX, 184Fh
+    INT 10h
+
+    MOV AH, 02h
+    MOV BH, 0h
+    MOV DX, 0000h
+    INT 10h
+    RET
+cls ENDP
+;─────────────────────┘

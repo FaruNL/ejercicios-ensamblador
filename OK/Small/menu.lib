@@ -1,0 +1,47 @@
+;─────── Macros ──────┐
+printS MACRO str
+    MOV AH, 09h
+    LEA DX, str
+    INT 21h
+ENDM
+
+cursor MACRO fila, columna
+    MOV AH, 02h
+    MOV BH, 0h
+    MOV DH, fila
+    MOV DL, columna
+    INT 10h
+ENDM
+
+printC MACRO regVal
+    MOV AH, 02h
+    MOV DL, regVal    ; Se pasará el numero tal cual, pero aún no en ASCII
+    ADD DL, '0'       ; Sumamos '0' (48) para poder imprimirlo como ASCII
+    INT 21h
+ENDM
+;─────────────────────┘
+
+.CODE
+
+;───── Procedures ────┐
+clearBlue PROC NEAR
+    MOV AX, 0600h
+    MOV BH, 1Fh
+    MOV CX, 0000h
+    MOV DX, 184Fh
+    INT 10h
+    RET
+clearBlue ENDP
+
+readChar PROC NEAR
+    MOV AH, 01h
+    INT 21h
+    RET
+readChar ENDP
+
+pause PROC NEAR
+    MOV AH, 07h
+    INT 21h
+    RET
+pause ENDP
+;─────────────────────┘

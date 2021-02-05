@@ -1,0 +1,26 @@
+Comparar = CMPS [DS:SI --> ES:DI]
+Buscar caracter = SCAS [AL | AX --> ES:DI]
+Mover = MOVS
+
+─────────────────────────────────┐
+Sustituir = MOVS dst, src
+
+msj1 DB 'Fierro','$'
+msj2 DB 'man','$'
+
+MOVS msj1, msj2 = msj1: 'manrro'
+─────────────────────────────────┘
+
+Direction Flag (DF):
+    0 = SI y DI incrementan en 1
+    1 = SI y DI decrementan en 1
+
+Repeticiones de funciones con cadenas (Prefijos)
+    REP = Repeat
+    REPE = Repeat while equal
+    REPNE = Repeat while NOT equal
+    REPZ = Repeat while zero
+    REPNZ = Repeat while NOT zero
+
+    REP -> MOVS, INS, OUTS, LODS, STOS
+    REPE, REPNE, REPZ, and REPNZ -> CMPS, SCAS

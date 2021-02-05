@@ -1,0 +1,60 @@
+.286
+
+;----------- MACROS -----------;
+printS MACRO str
+    MOV AH, 09h
+    LEA DX, str
+    INT 21h
+ENDM
+
+cursor MACRO fila, columna
+    MOV AH, 02h
+    MOV BH, 0h        ; Pagina 0
+    MOV DH, fila
+    MOV DL, columna
+    INT 10h
+ENDM
+
+printC MACRO regVal
+    MOV AH, 02h
+    MOV DL, regVal    ; Se pasará el numero tal cual, pero aún no en ASCII
+    ADD DL, '0'       ; Sumamos '0' (48) para poder imprimirlo como ASCII
+    INT 21h
+ENDM
+;--------------<>--------------;
+
+code SEGMENT
+ASSUME CS:code
+
+;--- Procedimientos --;
+clear PROC
+    MOV AX, 0600h     ; AH = 06 (Desplazar ventana hacia arriba) y al = 00 (Lineas a recorrer, 00 = limpiar)
+    MOV BH, 1Fh       ; 1 = Azul (Fondo), F = Blanco (Letras)
+    MOV CX, 0000h     ; 00 = Fila ventana esquina superior izquierda | 00 = Columna ventana esquina superior izquierda
+    MOV DX, 184Fh     ; 18 = Fila ventana esquina inferior derecha | 4F = Columna ventana esquina inferior derecha
+    INT 10h
+    RET
+clear ENDP
+
+readChar PROC         ;
+    MOV AH, 01h       ; Lectura de char (Se guarda en AL)
+    INT 21h
+    RET
+readChar ENDP
+
+cursorInit PROC
+    MOV AH, 02h
+    MOV BH, 0h
+    MOV dx, 0000h
+    INT 10h
+    RET
+cursorInit ENDP
+
+pausa PROC
+    MOV AH, 07h
+    INT 21h
+    RET
+pausa ENDP
+;---------<>----------;
+
+code ENDS

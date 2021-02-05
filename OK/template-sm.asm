@@ -1,0 +1,19 @@
+.286
+TITLE ''
+.MODEL SMALL
+
+.STACK
+
+.DATA
+
+.CODE
+
+main PROC FAR
+    MOV AX, @DATA
+    MOV DS, AX
+
+    MOV AX, 4C00h
+    INT 21h
+main ENDP
+
+END main
